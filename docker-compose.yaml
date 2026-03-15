@@ -3,6 +3,9 @@ services:
     build: ./todo-backend
     volumes:
       - ./todo-backend:/app
-      - /app/target
+      - backend-target:/app/target
     ports:
       - "3000:3000"
+
+volumes:
+  backend-target:
