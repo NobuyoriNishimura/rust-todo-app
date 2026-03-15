@@ -1,0 +1,8 @@
+services:
+  backend:
+    build: ./todo-backend
+    volumes:
+      - ./todo-backend:/app
+      - /app/target
+    ports:
+      - "3000:3000"
