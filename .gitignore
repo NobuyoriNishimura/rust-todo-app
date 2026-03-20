@@ -1,2 +1,3 @@
 todo-backend/target
 .env
+db/data
