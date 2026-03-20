@@ -1,0 +1,7 @@
+CREATE TABLE todo_list(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content VARCHAR(512) NOT NULL,
+    created_at DATE DEFAULT (CURRENT_DATE),
+    deadline DATE,
+    done BOOLEAN DEFAULT FALSE
+)
