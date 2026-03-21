@@ -11,15 +11,14 @@ struct ToDo {
 }
 
 // add TODO
-// inputs: content, date, deadline
+// inputs: content, deadline
 // output: "Added" or "Error: the TODO isn't added"
 // insert into database {ID, content, date, deadline, done}
-// ID: usize, content: String, date: String, deadline: String, done: bool
+// ID, date, done is automatically inserted.
 #[derive(Deserialize)]
 struct NewToDo{
     content: String,
-    date: String,
-    deadline:String
+    deadline: String
 }
 pub async fn add(Json(payload): Json<NewToDo>) -> &'static str {}
 
