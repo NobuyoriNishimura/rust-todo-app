@@ -1,10 +1,34 @@
 mod hello;
+mod todo;
 use axum::{Router, routing::get};
+use dotenv::dotenv;
+use sqlx::mysql::MySqlPoolOptions;
+
+#[derive(Clone)]
+pub struct AppState {
+    database_pool: MySqlPool,
+}
 
 #[tokio::main]
-async fn main() {
-    let app = Router::new().route("/api/hello", get(crate::hello::say_hello));
+async fn main() -> Result<(), sqlx::Error> {
+    dotenv().ok();
+    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+
+    let pool = MySqlPoolOptions::new()
+        .max_connections(5)
+        .connect(database_url)
+        .await?;
+    let state = AppState {
+        database_pool: pool,
+    };
+
+    let app = Router::new()
+        .route("/api/hello", get(crate::hello::say_hello))
+        .route("/api/todo/add", get(crate::todo::add))
+        .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
+
+    Ok(())
 }
