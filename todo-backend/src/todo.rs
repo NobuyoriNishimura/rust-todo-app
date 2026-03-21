@@ -21,14 +21,27 @@ struct NewToDo {
     content: String,
     deadline: String,
 }
-pub async fn add(State(state): State<AppState>, Json(payload): Json<NewToDo>) -> &'static str {}
+pub async fn add(State(state): State<AppState>, Json(payload): Json<NewToDo>) -> &'static str {
+    let result = sqlx::query!(
+        "INSERT INTO todo_list (content, deadline) VALUES (?, ?)",
+        payload.content,
+        payload.deadline
+    )
+    .execute(&state.database_pool)
+    .await;
 
-// delete TODO
-// inputs: ID
-// output: "Delete the TODO" or "Error: the TODO isn't deleted"
-pub async fn delete() -> &'static str {}
+    match result {
+        Ok(_) => "Added!",
+        Err(_) => "Error: the TODO isn't added.",
+    }
+}
 
-// check TODO
-//inputs: None
-//output: remaining TODOs as Json
-pub async fn check() -> Json<Vec<ToDo>> {}
+// // delete TODO
+// // inputs: ID
+// // output: "Delete the TODO" or "Error: the TODO isn't deleted"
+// pub async fn delete() -> &'static str {}
+
+// // check TODO
+// //inputs: None
+// //output: remaining TODOs as Json
+// pub async fn check() -> Json<Vec<ToDo>> {}
