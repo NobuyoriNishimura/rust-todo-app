@@ -15,7 +15,13 @@ struct ToDo {
 // output: "Added" or "Error: the TODO isn't added"
 // insert into database {ID, content, date, deadline, done}
 // ID: usize, content: String, date: String, deadline: String, done: bool
-pub async fn add() -> &'static str {}
+#[derive(Deserialize)]
+struct NewToDo{
+    content: String,
+    date: String,
+    deadline:String
+}
+pub async fn add(Json(payload): Json<NewToDo>) -> &'static str {}
 
 // delete TODO
 // inputs: ID
