@@ -16,9 +16,9 @@ struct ToDo {
 // insert into database {ID, content, date, deadline, done}
 // ID, date, done is automatically inserted.
 #[derive(Deserialize)]
-struct NewToDo{
+struct NewToDo {
     content: String,
-    deadline: String
+    deadline: String,
 }
 pub async fn add(Json(payload): Json<NewToDo>) -> &'static str {}
 
