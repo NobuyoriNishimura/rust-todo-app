@@ -1,4 +1,5 @@
-use axum::Json;
+use crate::AppState;
+use axum::{Json, extract::State};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
@@ -20,7 +21,7 @@ struct NewToDo {
     content: String,
     deadline: String,
 }
-pub async fn add(Json(payload): Json<NewToDo>) -> &'static str {}
+pub async fn add(State(state): State<AppState>, Json(payload): Json<NewToDo>) -> &'static str {}
 
 // delete TODO
 // inputs: ID
