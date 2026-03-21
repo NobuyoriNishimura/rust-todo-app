@@ -17,7 +17,7 @@ struct ToDo {
 // insert into database {ID, content, date, deadline, done}
 // ID, date, done is automatically inserted.
 #[derive(Deserialize)]
-struct NewToDo {
+pub struct NewToDo {
     content: String,
     deadline: String,
 }
