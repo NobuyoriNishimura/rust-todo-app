@@ -1,12 +1,15 @@
 mod hello;
 mod todo;
-use axum::{Router, routing::get};
+use axum::{
+    Router,
+    routing::{get, post},
+};
 use dotenv::dotenv;
 use sqlx::mysql::MySqlPoolOptions;
 
 #[derive(Clone)]
 pub struct AppState {
-    database_pool: MySqlPool,
+    database_pool: sqlx::mysql::MySqlPool,
 }
 
 #[tokio::main]
@@ -16,7 +19,7 @@ async fn main() -> Result<(), sqlx::Error> {
 
     let pool = MySqlPoolOptions::new()
         .max_connections(5)
-        .connect(database_url)
+        .connect(&database_url)
         .await?;
     let state = AppState {
         database_pool: pool,
@@ -24,7 +27,7 @@ async fn main() -> Result<(), sqlx::Error> {
 
     let app = Router::new()
         .route("/api/hello", get(crate::hello::say_hello))
-        .route("/api/todo/add", get(crate::todo::add))
+        .route("/api/todo/add", post(crate::todo::add))
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
