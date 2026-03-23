@@ -55,4 +55,19 @@ struct ToDo {
     deadline: String,
     done: bool,
 }
-pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {}
+pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {
+    let result = sqlx::query_as!(ToDo, "SELECT * FROM todo_list")
+        .fetch_all(&state.database_pool)
+        .await;
+
+    match result {
+        Ok(todos) => Json(todos),
+        Err(_) => Json(ToDo {
+            id: -1,
+            content: String::from("Error"),
+            date: String::from("-"),
+            deadline: String::from("-"),
+            done: false,
+        }),
+    }
+}
