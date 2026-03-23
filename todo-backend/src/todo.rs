@@ -1,10 +1,13 @@
 use crate::AppState;
-use axum::{Json, extract::State};
+use axum::{
+    Json,
+    extract::{Path, State},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
 struct ToDo {
-    id: usize,
+    id: i32,
     content: String,
     date: String,
     deadline: String,
@@ -36,10 +39,19 @@ pub async fn add(State(state): State<AppState>, Json(payload): Json<NewToDo>) ->
     }
 }
 
-// // delete TODO
-// // inputs: ID
-// // output: "Delete the TODO" or "Error: the TODO isn't deleted"
-// pub async fn delete() -> &'static str {}
+// delete TODO
+// inputs: ID
+// output: "Delete the TODO" or "Error: the TODO isn't deleted"
+pub async fn delete(State(state): State<AppState>, Path(id): Path<i32>) -> &'static str {
+    let result = sqlx::query!("DELETE FROM todo_list WHERE id = ?", id)
+        .execute(&state.database_pool)
+        .await;
+
+    match result {
+        Ok(_) => "Delete the ToDo.",
+        Err(_) => "Error: the ToDo isn't deleted.",
+    }
+}
 
 // // check TODO
 // //inputs: None
