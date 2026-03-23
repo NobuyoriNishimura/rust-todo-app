@@ -53,7 +53,7 @@ pub async fn delete(State(state): State<AppState>, Path(id): Path<i32>) -> &'sta
     }
 }
 
-// // check TODO
-// //inputs: None
-// //output: remaining TODOs as Json
-// pub async fn check() -> Json<Vec<ToDo>> {}
+// check TODO
+//inputs: None
+//output: remaining TODOs as Json
+pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {}
