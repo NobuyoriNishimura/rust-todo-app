@@ -49,7 +49,7 @@ pub async fn delete(State(state): State<AppState>, Path(id): Path<i32>) -> &'sta
 //inputs: None
 //output: remaining TODOs as Json
 #[derive(Serialize)]
-struct ToDo {
+pub struct ToDo {
     id: i32,
     content: String,
     created_at: Option<NaiveDate>,
