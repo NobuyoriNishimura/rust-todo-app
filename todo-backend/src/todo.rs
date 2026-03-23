@@ -5,15 +5,6 @@ use axum::{
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize)]
-struct ToDo {
-    id: i32,
-    content: String,
-    date: String,
-    deadline: String,
-    done: bool,
-}
-
 // add TODO
 // inputs: content, deadline
 // output: "Added" or "Error: the TODO isn't added"
@@ -56,4 +47,12 @@ pub async fn delete(State(state): State<AppState>, Path(id): Path<i32>) -> &'sta
 // check TODO
 //inputs: None
 //output: remaining TODOs as Json
+#[derive(Serialize)]
+struct ToDo {
+    id: i32,
+    content: String,
+    date: String,
+    deadline: String,
+    done: bool,
+}
 pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {}
