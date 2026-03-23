@@ -2,7 +2,7 @@ mod hello;
 mod todo;
 use axum::{
     Router,
-    routing::{get, post},
+    routing::{delete, get, post},
 };
 use dotenv::dotenv;
 use sqlx::mysql::MySqlPoolOptions;
@@ -28,6 +28,7 @@ async fn main() -> Result<(), sqlx::Error> {
     let app = Router::new()
         .route("/api/hello", get(crate::hello::say_hello))
         .route("/api/todo/add", post(crate::todo::add))
+        .route("/api/todo/delete/{id}", delete(crate::todo::delete))
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();

@@ -1,5 +1,8 @@
 use crate::AppState;
-use axum::{Json, extract::State};
+use axum::{
+    Json,
+    extract::{Path, State},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
@@ -36,10 +39,10 @@ pub async fn add(State(state): State<AppState>, Json(payload): Json<NewToDo>) ->
     }
 }
 
-// // delete TODO
-// // inputs: ID
-// // output: "Delete the TODO" or "Error: the TODO isn't deleted"
-// pub async fn delete() -> &'static str {}
+// delete TODO
+// inputs: ID
+// output: "Delete the TODO" or "Error: the TODO isn't deleted"
+pub async fn delete(State(state): State<AppState>, Path(id): Path<usize>) -> &'static str {}
 
 // // check TODO
 // //inputs: None
