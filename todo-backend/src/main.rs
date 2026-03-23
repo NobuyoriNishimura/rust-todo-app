@@ -29,6 +29,7 @@ async fn main() -> Result<(), sqlx::Error> {
         .route("/api/hello", get(crate::hello::say_hello))
         .route("/api/todo/add", post(crate::todo::add))
         .route("/api/todo/delete/{id}", delete(crate::todo::delete))
+        .route("/api/todo/check", get(crate::todo::check))
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();

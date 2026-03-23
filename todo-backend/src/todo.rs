@@ -3,22 +3,14 @@ use axum::{
     Json,
     extract::{Path, State},
 };
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
-
-#[derive(Serialize)]
-struct ToDo {
-    id: i32,
-    content: String,
-    date: String,
-    deadline: String,
-    done: bool,
-}
 
 // add TODO
 // inputs: content, deadline
 // output: "Added" or "Error: the TODO isn't added"
-// insert into database {ID, content, date, deadline, done}
-// ID, date, done is automatically inserted.
+// insert into database {ID, content, created_at, deadline, done}
+// ID, created_at, done is automatically inserted.
 #[derive(Deserialize)]
 pub struct NewToDo {
     content: String,
@@ -53,7 +45,30 @@ pub async fn delete(State(state): State<AppState>, Path(id): Path<i32>) -> &'sta
     }
 }
 
-// // check TODO
-// //inputs: None
-// //output: remaining TODOs as Json
-// pub async fn check() -> Json<Vec<ToDo>> {}
+// check TODO
+//inputs: None
+//output: remaining TODOs as Json
+#[derive(Serialize)]
+pub struct ToDo {
+    id: i32,
+    content: String,
+    created_at: Option<NaiveDate>,
+    deadline: Option<NaiveDate>,
+    done: Option<i8>,
+}
+pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {
+    let result = sqlx::query_as!(ToDo, "SELECT * FROM todo_list")
+        .fetch_all(&state.database_pool)
+        .await;
+
+    match result {
+        Ok(todos) => Json(todos),
+        Err(_) => Json(vec![ToDo {
+            id: -1,
+            content: String::from("Error"),
+            created_at: None,
+            deadline: None,
+            done: None,
+        }]),
+    }
+}
