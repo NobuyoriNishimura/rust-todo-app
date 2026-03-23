@@ -3,6 +3,7 @@ use axum::{
     Json,
     extract::{Path, State},
 };
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 
 // add TODO
@@ -51,9 +52,9 @@ pub async fn delete(State(state): State<AppState>, Path(id): Path<i32>) -> &'sta
 struct ToDo {
     id: i32,
     content: String,
-    created_at: String,
-    deadline: String,
-    done: bool,
+    created_at: Option<NaiveDate>,
+    deadline: Option<NaiveDate>,
+    done: Option<i8>,
 }
 pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {
     let result = sqlx::query_as!(ToDo, "SELECT * FROM todo_list")
@@ -62,12 +63,12 @@ pub async fn check(State(state): State<AppState>) -> Json<Vec<ToDo>> {
 
     match result {
         Ok(todos) => Json(todos),
-        Err(_) => Json(ToDo {
+        Err(_) => Json(vec![ToDo {
             id: -1,
             content: String::from("Error"),
-            created_at: String::from("-"),
-            deadline: String::from("-"),
-            done: false,
-        }),
+            created_at: None,
+            deadline: None,
+            done: None,
+        }]),
     }
 }
