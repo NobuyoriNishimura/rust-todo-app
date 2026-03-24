@@ -1,6 +1,22 @@
 # rust-todo-app
 A todo-app built with Rust.
 
+## Setup
+This API uses `Docker Compose`. Please ensure that you have `Docker` installed on your PC.
+
+### 1. Get the source code
+First, execute the following comannds to get the source code in this repository, or download and unzip `ZIP` file via the green `CODE` button at top-right of this page.
+```bash
+git clone https://github.com/NobuyoriNishimura/rust-todo-app.git
+cd rust-todo-app
+```
+
+### 2. Start the service
+Then, start the service by spinning up containers for backend or database. Once you see the message `The server is ready.`, this API is available.
+```bash
+docker compose up --build
+```
+
 ## Usage examples
 ### 1. Add ToDo
 Add a new ToDo into a database with following `curl` command. 
