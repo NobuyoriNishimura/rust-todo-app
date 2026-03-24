@@ -31,3 +31,43 @@ Delete the specific ToDo from database with following `curl` command.
 # The ToDo which id equals "1" is deleted.
 curl -X DELETE http://localhost:3000/api/todo/delete/1
 ```
+
+### 3. Check ToDo
+Retrieve the list of remaining ToDos from the database with following `curl` command. 
+
+**Expected responses**
+- Success (Empty): `[]`
+- Success (With data): 
+```json
+[
+    {
+        "id":2,
+        "content":"test!!",
+        "created_at":"2026-03-23",
+        "deadline":"2026-04-01",
+        "done":0
+    },
+    .
+    .
+    .
+]
+```
+- Failure: 
+```json
+[
+    {
+        "id":-1,
+        "content":"Error",
+        "created_at":null,
+        "deadline":null,
+        "done":null
+    }
+]
+```
+
+**Parameters**
+- No parameters are required.
+
+```bash
+curl http://localhost:3000/api/todo/check
+```
