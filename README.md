@@ -13,6 +13,7 @@ Add a new ToDo into a database with following `curl` command.
 - `content`: The task description.
 - `deadline`: The completion date. The format must be `YYYY-MM-DD`.
 
+**Command**
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"content": "test!!", "deadline": "2026-04-01"}' http://localhost:3000/api/todo/add
 ```
@@ -27,6 +28,7 @@ Delete the specific ToDo from database with following `curl` command.
 **Parameters**
 - `id`: The unique identifier of the ToDo to be deleted. Signify it at the end of the URL.
 
+**Command**
 ```bash
 # The ToDo which id equals "1" is deleted.
 curl -X DELETE http://localhost:3000/api/todo/delete/1
@@ -68,6 +70,7 @@ Retrieve the list of remaining ToDos from the database with following `curl` com
 **Parameters**
 - No parameters are required.
 
+**Command**
 ```bash
 curl http://localhost:3000/api/todo/check
 ```
