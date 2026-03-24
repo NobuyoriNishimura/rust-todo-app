@@ -27,7 +27,7 @@ pub async fn add(State(state): State<AppState>, Json(payload): Json<NewToDo>) ->
 
     match result {
         Ok(_) => "Added!",
-        Err(_) => "Error: the TODO isn't added.",
+        Err(_) => "Error: the ToDo isn't added.",
     }
 }
 

@@ -5,7 +5,7 @@ A todo-app built with Rust.
 This API uses `Docker Compose`. Please ensure that you have `Docker` installed on your PC.
 
 ### 1. Get the source code
-First, execute the following comannds to get the source code in this repository, or download and unzip `ZIP` file via the green `CODE` button at top-right of this page.
+First, execute the following comannds to get the source code in this repository, or download and unzip `ZIP` file via the green `Code` button at top-right of this page.
 ```bash
 git clone https://github.com/NobuyoriNishimura/rust-todo-app.git
 cd rust-todo-app
@@ -23,7 +23,7 @@ Add a new ToDo into a database with following `curl` command.
 
 **Expected responses**
 - Success: Returns `Added!`
-- Failure: Returns `Error: the TODO isn't added.`
+- Failure: Returns `Error: the ToDo isn't added.`
 
 **Parameters**
 - `content`: The task description.
